@@ -1,4 +1,4 @@
-# DecodeLabs — Full Stack Internship Platform
+# DecodeLabs - Full Stack Internship Platform
 ### Project 1: Responsive Frontend Interface · Batch 2026
 
 ---

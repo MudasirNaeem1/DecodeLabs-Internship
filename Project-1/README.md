@@ -5,7 +5,7 @@
 
 ## Overview
 
-DecodeLabs is a structured full-stack internship platform that trains developers through sequential, industry-grade projects. This repository contains **Project 1** — a fully responsive, multi-page frontend interface built with pure HTML5, CSS3, and vanilla JavaScript. No frameworks. No libraries. Just fundamentals done right.
+DecodeLabs is a structured full-stack internship platform that trains developers through sequential, industry-grade projects. This repository contains **Project 1** - a fully responsive, multi-page frontend interface built with pure HTML5, CSS3, and vanilla JavaScript. No frameworks. No libraries. Just fundamentals done right.
 
 ---
 
@@ -35,17 +35,17 @@ decodelabs/
 
 ## Tech Stack
 
-- **HTML5** — Semantic landmarks, ARIA roles, accessible markup
-- **CSS3** — CSS Grid, Flexbox, `clamp()` fluid typography, CSS variables, `backdrop-filter`
-- **JavaScript (ES6)** — DOM routing, IntersectionObserver scroll reveal, counter animation
-- **Fonts** — Quantico (headings) + DM Sans (body) via Google Fonts
+- **HTML5** - Semantic landmarks, ARIA roles, accessible markup
+- **CSS3** - CSS Grid, Flexbox, `clamp()` fluid typography, CSS variables, `backdrop-filter`
+- **JavaScript (ES6)** - DOM routing, IntersectionObserver scroll reveal, counter animation
+- **Fonts** - Quantico (headings) + DM Sans (body) via Google Fonts
 
 ---
 
 ## Features
 
-- Single-page routing — no page reloads, smooth fade transitions
-- Mobile-first responsive layout — works from 320px to 4K
+- Single-page routing - no page reloads, smooth fade transitions
+- Mobile-first responsive layout - works from 320px to 4K
 - Hamburger menu with animated ✕ toggle on mobile
 - Scroll reveal animations on cards and sections
 - Animated stat counters (500+, 12, 98%) on hero load
@@ -59,16 +59,16 @@ decodelabs/
 
 ## Getting Started
 
-**Option 1 — VS Code Live Server**
+**Option 1 - VS Code Live Server**
 1. Open the project folder in VS Code
 2. Right-click `index.html` → `Open with Live Server`
 3. Opens at `http://127.0.0.1:5500`
 
-**Option 2 — Direct browser**
+**Option 2 - Direct browser**
 1. Double-click `index.html`
 2. Opens locally in your default browser
 
-> No build step, no npm install, no dependencies — just open and run.
+> No build step, no npm install, no dependencies - just open and run.
 
 ---
 
@@ -91,10 +91,10 @@ decodelabs/
 ## Internship Roadmap
 
 ```
-P1 — Responsive Frontend   ✅ Active
-P2 — Backend APIs          🔒 Unlocks after P1
-P3 — React SPA             🔒 Unlocks after P2
-P4 — Full Stack Deploy     🔒 Unlocks after P3
+P1 - Responsive Frontend   ✅ Active
+P2 - Backend APIs          🔒 Unlocks after P1
+P3 - React SPA             🔒 Unlocks after P2
+P4 - Full Stack Deploy     🔒 Unlocks after P3
 ```
 
 ---

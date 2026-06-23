@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Project 3 — Database Integration</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+header{background:#161b27;border-bottom:1px solid #2d3748;padding:1rem 2rem;display:flex;align-items:center;gap:12px}
+header h1{font-size:18px;font-weight:600;color:#fff}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;background:#1a3a5c;color:#63b3ed;font-weight:500}
+.badge.green{background:#1a3a2a;color:#68d391}
+.badge.project{background:#2d1f4a;color:#b794f4}
+main{max-width:1100px;margin:0 auto;padding:2rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:2rem}
+.stat-card{background:#161b27;border:1px solid #2d3748;border-radius:12px;padding:1.25rem 1.5rem}
+.stat-label{font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.stat-num{font-size:28px;font-weight:700;color:#fff}
+.stat-num.teal{color:#4fd1c5}
+.tabs{display:flex;gap:0;border-bottom:1px solid #2d3748;margin-bottom:1.5rem}
+.tab-btn{padding:10px 20px;background:none;border:none;color:#718096;font-size:14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.tab-btn.active{color:#4fd1c5;border-bottom-color:#4fd1c5;font-weight:600}
+.tab-btn:hover:not(.active){color:#e2e8f0}
+.panel{display:none}
+.panel.active{display:block}
+.section{background:#161b27;border:1px solid #2d3748;border-radius:12px;padding:1.5rem;margin-bottom:1.25rem}
+.section-title{font-size:12px;color:#718096;text-transform:uppercase;letter-spacing:.07em;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.section-title span{background:#1a3a2a;color:#68d391;padding:2px 8px;border-radius:4px;font-size:10px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+label{display:block;font-size:12px;color:#a0aec0;margin-bottom:5px}
+input,select{width:100%;padding:9px 12px;background:#0f1117;border:1px solid #2d3748;border-radius:8px;color:#e2e8f0;font-size:14px;outline:none;transition:border .15s}
+input:focus,select:focus{border-color:#4fd1c5}
+input::placeholder{color:#4a5568}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.btn-primary{background:#4fd1c5;color:#0f1117}
+.btn-primary:hover{background:#38b2ac}
+.btn-danger{background:#fc8181;color:#0f1117;padding:5px 10px;font-size:12px}
+.btn-danger:hover{background:#f56565}
+.btn-toggle{background:#f6ad55;color:#0f1117;padding:5px 10px;font-size:12px}
+.btn-toggle:hover{background:#ed8936}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 14px;font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid #2d3748;background:#0f1117}
+td{padding:11px 14px;border-bottom:1px solid #1a202c;font-size:14px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#1a202c}
+.pill{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+.pill.active{background:#1a3a2a;color:#68d391}
+.pill.inactive{background:#3a2a1a;color:#f6ad55}
+.actions{display:flex;gap:6px}
+code{font-family:'Courier New',monospace;background:#0f1117;padding:2px 6px;border-radius:4px;font-size:12px;color:#4fd1c5}
+.sql-log{background:#0a0e16;border:1px solid #2d3748;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12px;line-height:1.8;color:#718096;display:none;margin-top:12px}
+.sql-kw{color:#63b3ed}
+.sql-val{color:#68d391}
+.sql-comment{color:#4a5568;font-style:italic}
+.toast{position:fixed;bottom:20px;right:20px;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;transform:translateY(80px);opacity:0;transition:all .25s;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:#1a3a2a;color:#68d391;border:1px solid #276749}
+.toast.error{background:#3a1a1a;color:#fc8181;border:1px solid #742a2a}
+.schema-box{background:#0a0e16;border:1px solid #2d3748;border-radius:8px;padding:1rem;font-family:'Courier New',monospace;font-size:12px;line-height:2;margin-bottom:1rem}
+.s-table{color:#4fd1c5;font-size:13px;font-weight:bold}
+.s-pk{color:#68d391}
+.s-fk{color:#f6ad55}
+.s-type{color:#718096}
+.s-constraint{color:#fc8181;font-size:11px}
+.rel-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-left:2px solid #2d3748;margin-left:4px;padding-left:12px;margin-bottom:4px;font-size:13px;color:#a0aec0}
+.empty{text-align:center;color:#4a5568;padding:2rem;font-size:14px}
+@media(max-width:600px){.form-grid,.stats{grid-template-columns:1fr}.actions{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header>
+  <span class="badge project">Project 3</span>
+  <h1>Database Integration</h1>
+  <span class="badge">DecodeLabs · 2026</span>
+  <span class="badge green" id="conn-badge">● Connected</span>
+</header>
+
+<main>
+  <div class="stats">
+    <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-num" id="s-users">—</div></div>
+    <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-num" id="s-orders">—</div></div>
+    <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-num teal" id="s-revenue">—</div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="tab('users',this)">👤 Users</button>
+    <button class="tab-btn" onclick="tab('orders',this)">🛒 Orders</button>
+    <button class="tab-btn" onclick="tab('schema',this)">📐 Schema</button>
+  </div>
+
+  <!-- USERS -->
+  <div id="panel-users" class="panel active">
+    <div class="section">
+      <div class="section-title">Add User <span>CREATE — INSERT</span></div>
+      <div class="form-grid">
+        <div><label>Name</label><input id="u-name" placeholder="e.g. Mudasir Ali"/></div>
+        <div><label>Email</label><input id="u-email" placeholder="e.g. mudasir@email.com"/></div>
+      </div>
+      <button class="btn btn-primary" onclick="createUser()">+ Insert Record</button>
+      <div class="sql-log" id="user-sql"></div>
+    </div>
+    <div class="section">
+      <div class="section-title">All Users <span>READ — SELECT</span></div>
+      <table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+      <tbody id="user-tbody"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- ORDERS -->
+  <div id="panel-orders" class="panel">
+    <div class="section">
+      <div class="section-title">Add Order <span>CREATE — INSERT</span></div>
+      <div class="form-grid">
+        <div><label>User (Foreign Key)</label><select id="o-user"><option value="">select user...</option></select></div>
+        <div><label>Amount ($)</label><input id="o-amount" type="number" min="0.01" step="0.01" placeholder="e.g. 49.99"/></div>
+      </div>
+      <button class="btn btn-primary" onclick="createOrder()">+ Insert Record</button>
+      <div class="sql-log" id="order-sql"></div>
+    </div>
+    <div class="section">
+      <div class="section-title">All Orders <span>READ — SELECT + JOIN</span></div>
+      <table><thead><tr><th>ID</th><th>User ID (FK)</th><th>Customer</th><th>Amount</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody id="order-tbody"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- SCHEMA -->
+  <div id="panel-schema" class="panel">
+    <div class="section">
+      <div class="section-title">Database Schema — SQLite</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div class="schema-box">
+            <div class="s-table">TABLE users</div>
+            <div><span class="s-pk">PK</span> user_id   <span class="s-type">INTEGER</span> <span class="s-constraint">NOT NULL</span></div>
+            <div>&nbsp;&nbsp;&nbsp;name      <span class="s-type">TEXT</span> <span class="s-constraint">NOT NULL</span></div>
+            <div>&nbsp;&nbsp;&nbsp;email     <span class="s-type">TEXT</span> <span class="s-constraint">UNIQUE NOT NULL</span></div>
+            <div>&nbsp;&nbsp;&nbsp;status    <span class="s-type">TEXT</span> DEFAULT <span class="sql-val">'active'</span></div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s-constraint">CHECK IN ('active','inactive')</span></div>
+            <div>&nbsp;&nbsp;&nbsp;created_at <span class="s-type">DATETIME</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="schema-box">
+            <div class="s-table">TABLE orders</div>
+            <div><span class="s-pk">PK</span> order_id  <span class="s-type">INTEGER</span> <span class="s-constraint">NOT NULL</span></div>
+            <div><span class="s-fk">FK</span> user_id   <span class="s-type">INTEGER</span> → users(user_id)</div>
+            <div>&nbsp;&nbsp;&nbsp;amount    <span class="s-type">REAL</span> <span class="s-constraint">CHECK(amount &gt; 0)</span></div>
+            <div>&nbsp;&nbsp;&nbsp;created_at <span class="s-type">DATETIME</span></div>
+            <div>&nbsp;&nbsp;</div>
+            <div><span class="s-constraint">FOREIGN KEY (user_id)</span></div>
+            <div><span class="s-constraint">&nbsp;&nbsp;REFERENCES users(user_id)</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="rel-item">🔗 Relationship: users → orders is <strong>One-to-Many (1:M)</strong> — one user can have many orders</div>
+      <div class="rel-item">🛡️ Integrity: Deleting a user with active orders is blocked by FK constraint</div>
+      <div class="rel-item">🔒 Security: All queries use parameterized placeholders <code>?</code> — SQL injection safe</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">CRUD ↔ HTTP ↔ SQL Mapping</div>
+      <table>
+        <thead><tr><th>CRUD</th><th>HTTP Method</th><th>SQL</th><th>Endpoint</th></tr></thead>
+        <tbody>
+          <tr><td><code>CREATE</code></td><td><code>POST</code></td><td><code>INSERT INTO</code></td><td><code>/api/users</code></td></tr>
+          <tr><td><code>READ</code></td><td><code>GET</code></td><td><code>SELECT *</code></td><td><code>/api/users</code></td></tr>
+          <tr><td><code>UPDATE</code></td><td><code>PUT</code></td><td><code>UPDATE SET</code></td><td><code>/api/users/{id}</code></td></tr>
+          <tr><td><code>DELETE</code></td><td><code>DELETE</code></td><td><code>DELETE FROM</code></td><td><code>/api/users/{id}</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const api = async (url, opts={}) => {
+  const r = await fetch(url, {headers:{'Content-Type':'application/json'}, ...opts});
+  const data = await r.json();
+  if(!r.ok) throw new Error(data.detail || 'Error');
+  return data;
+};
+
+const toast = (msg, type='success') => {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast '+type+' show';
+  setTimeout(()=>el.classList.remove('show'), 3000);
+};
+
+const showSQL = (id, html) => {
+  const el = document.getElementById(id);
+  el.style.display='block'; el.innerHTML=html;
+  setTimeout(()=>el.style.display='none', 5000);
+};
+
+function tab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='orders') loadUserSelect();
+}
+
+async function loadStats() {
+  const s = await api('/api/stats');
+  document.getElementById('s-users').textContent = s.users;
+  document.getElementById('s-orders').textContent = s.orders;
+  document.getElementById('s-revenue').textContent = '$'+s.total_revenue.toFixed(2);
+}
+
+async function loadUsers() {
+  const users = await api('/api/users');
+  const tb = document.getElementById('user-tbody');
+  if(!users.length){tb.innerHTML='<tr><td colspan="6" class="empty">No users yet.</td></tr>';return;}
+  tb.innerHTML = users.map(u=>`
+    <tr>
+      <td><code>${u.user_id}</code></td>
+      <td>${u.name}</td>
+      <td>${u.email}</td>
+      <td><span class="pill ${u.status}">${u.status}</span></td>
+      <td style="color:#718096;font-size:12px">${(u.created_at||'').slice(0,10)}</td>
+      <td><div class="actions">
+        <button class="btn btn-toggle" onclick="toggleStatus(${u.user_id},'${u.status}')">⟳ Toggle</button>
+        <button class="btn btn-danger" onclick="deleteUser(${u.user_id})">✕ Delete</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+async function loadOrders() {
+  const orders = await api('/api/orders');
+  const tb = document.getElementById('order-tbody');
+  if(!orders.length){tb.innerHTML='<tr><td colspan="6" class="empty">No orders yet.</td></tr>';return;}
+  tb.innerHTML = orders.map(o=>`
+    <tr>
+      <td><code>${o.order_id}</code></td>
+      <td><code>${o.user_id}</code></td>
+      <td>${o.user_name||'<em style="color:#4a5568">deleted</em>'}</td>
+      <td>$${o.amount.toFixed(2)}</td>
+      <td style="color:#718096;font-size:12px">${(o.created_at||'').slice(0,10)}</td>
+      <td><button class="btn btn-danger" onclick="deleteOrder(${o.order_id})">✕ Delete</button></td>
+    </tr>`).join('');
+}
+
+async function loadUserSelect() {
+  const users = await api('/api/users');
+  const sel = document.getElementById('o-user');
+  sel.innerHTML = '<option value="">select user...</option>' +
+    users.map(u=>`<option value="${u.user_id}">${u.name} (ID: ${u.user_id})</option>`).join('');
+}
+
+async function createUser() {
+  const name = document.getElementById('u-name').value.trim();
+  const email = document.getElementById('u-email').value.trim();
+  if(!name||!email){toast('Name and email are required','error');return;}
+  try {
+    await api('/api/users',{method:'POST',body:JSON.stringify({name,email})});
+    document.getElementById('u-name').value='';
+    document.getElementById('u-email').value='';
+    showSQL('user-sql',`<span class="sql-kw">INSERT INTO</span> users (name, email) <span class="sql-kw">VALUES</span> (<span class="sql-val">?</span>, <span class="sql-val">?</span>)<br><span class="sql-comment">-- Parameterized query: safe from SQL injection</span>`);
+    await loadUsers(); await loadStats();
+    toast('User created successfully');
+  } catch(e){toast(e.message,'error');}
+}
+
+async function toggleStatus(id, cur) {
+  const newStatus = cur==='active'?'inactive':'active';
+  try {
+    await api(`/api/users/${id}`,{method:'PUT',body:JSON.stringify({status:newStatus})});
+    showSQL('user-sql',`<span class="sql-kw">UPDATE</span> users <span class="sql-kw">SET</span> status = <span class="sql-val">?</span> <span class="sql-kw">WHERE</span> user_id = <span class="sql-val">?</span>`);
+    await loadUsers();
+    toast(`Status updated to ${newStatus}`);
+  } catch(e){toast(e.message,'error');}
+}
+
+async function deleteUser(id) {
+  try {
+    await api(`/api/users/${id}`,{method:'DELETE'});
+    showSQL('user-sql',`<span class="sql-kw">DELETE FROM</span> users <span class="sql-kw">WHERE</span> user_id = <span class="sql-val">?</span>`);
+    await loadUsers(); await loadStats();
+    toast('User deleted');
+  } catch(e){toast(e.message,'error');}
+}
+
+async function createOrder() {
+  const user_id = parseInt(document.getElementById('o-user').value);
+  const amount = parseFloat(document.getElementById('o-amount').value);
+  if(!user_id){toast('Select a user (FK required)','error');return;}
+  if(!amount||amount<=0){toast('Enter a valid amount','error');return;}
+  try {
+    await api('/api/orders',{method:'POST',body:JSON.stringify({user_id,amount})});
+    document.getElementById('o-amount').value='';
+    showSQL('order-sql',`<span class="sql-kw">INSERT INTO</span> orders (user_id, amount) <span class="sql-kw">VALUES</span> (<span class="sql-val">?</span>, <span class="sql-val">?</span>)<br><span class="sql-comment">-- FK user_id references users(user_id)</span>`);
+    await loadOrders(); await loadStats();
+    toast('Order created successfully');
+  } catch(e){toast(e.message,'error');}
+}
+
+async function deleteOrder(id) {
+  try {
+    await api(`/api/orders/${id}`,{method:'DELETE'});
+    await loadOrders(); await loadStats();
+    toast('Order deleted');
+  } catch(e){toast(e.message,'error');}
+}
+
+loadUsers(); loadStats();
+</script>
+</body>
+</html>

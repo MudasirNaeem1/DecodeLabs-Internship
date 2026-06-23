@@ -1,4 +1,4 @@
-# Project 3 — Database Integration
+# Project 3 - Database Integration
 **Full Stack Development | DecodeLabs 2026**
 
 ## Tech Stack
@@ -50,11 +50,11 @@ TABLE orders
 
 ## Key Concepts Demonstrated
 
-- **Schema Design** — Primary keys, foreign keys, constraints (UNIQUE, NOT NULL, CHECK)
-- **CRUD Operations** — All 4 operations mapped to REST endpoints
-- **FK Integrity** — Cannot delete user with existing orders
-- **SQL Injection Prevention** — All queries use parameterized placeholders `?`
-- **RESTful HTTP Mapping** — POST=CREATE, GET=READ, PUT=UPDATE, DELETE=DELETE
+- **Schema Design** - Primary keys, foreign keys, constraints (UNIQUE, NOT NULL, CHECK)
+- **CRUD Operations** - All 4 operations mapped to REST endpoints
+- **FK Integrity** - Cannot delete user with existing orders
+- **SQL Injection Prevention** - All queries use parameterized placeholders `?`
+- **RESTful HTTP Mapping** - POST=CREATE, GET=READ, PUT=UPDATE, DELETE=DELETE
 
 ## API Docs
 FastAPI auto-generates docs at: `http://localhost:8000/docs`

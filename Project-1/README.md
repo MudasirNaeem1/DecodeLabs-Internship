@@ -1,15 +1,11 @@
 # DecodeLabs - Full Stack Internship Platform
-### Project 1: Responsive Frontend Interface · Batch 2026
+
+> **Project 1: Responsive Frontend Interface · Batch 2026**  
+> A fully responsive, multi-page frontend built with pure HTML5, CSS3, and vanilla JavaScript. No frameworks. No libraries. Just fundamentals done right.
 
 ---
 
-## Overview
-
-DecodeLabs is a structured full-stack internship platform that trains developers through sequential, industry-grade projects. This repository contains **Project 1** - a fully responsive, multi-page frontend interface built with pure HTML5, CSS3, and vanilla JavaScript. No frameworks. No libraries. Just fundamentals done right.
-
----
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 decodelabs/
@@ -21,102 +17,111 @@ decodelabs/
 
 ---
 
-## Pages
+## 📄 Pages
 
-| Page | ID | Description |
+| Page | Route | Description |
 |---|---|---|
 | Home | `#home` | Hero, features, toolkit, CTA |
 | About | `#about` | Story, standards, three pillars |
 | Courses | `#courses` | All 4 project tracks + dashboard |
-| Projects | `#projects` | Active P1 + locked P2–P4 |
+| Projects | `#projects` | Active P1 + locked P2-P4 |
 | Contact | `#contact` | Contact info + message form |
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **HTML5** - Semantic landmarks, ARIA roles, accessible markup
-- **CSS3** - CSS Grid, Flexbox, `clamp()` fluid typography, CSS variables, `backdrop-filter`
-- **JavaScript (ES6)** - DOM routing, IntersectionObserver scroll reveal, counter animation
-- **Fonts** - Quantico (headings) + DM Sans (body) via Google Fonts
-
----
-
-## Features
-
-- Single-page routing - no page reloads, smooth fade transitions
-- Mobile-first responsive layout - works from 320px to 4K
-- Hamburger menu with animated ✕ toggle on mobile
-- Scroll reveal animations on cards and sections
-- Animated stat counters (500+, 12, 98%) on hero load
-- Form focus states with glow ring
-- Toast notification system
-- Backend modal for locked features
-- ESC key closes modal
-- Footer link hover slide animation
+| Technology | Usage |
+|---|---|
+| **HTML5** | Semantic landmarks, ARIA roles, accessible markup |
+| **CSS3** | Grid, Flexbox, `clamp()` fluid typography, CSS variables, `backdrop-filter` |
+| **JavaScript ES6** | DOM routing, IntersectionObserver scroll reveal, counter animation |
+| **Quantico** | Heading font - 700 weight, uppercase |
+| **DM Sans** | Body font - 400 / 500 weight |
 
 ---
 
-## Getting Started
+## ✨ Features
 
-**Option 1 - VS Code Live Server**
+- **SPA routing** - no page reloads, smooth fade transitions between pages
+- **Mobile-first** - works from 320px to 4K displays
+- **Hamburger menu** - animated ✕ toggle on mobile
+- **Scroll reveal** - cards and sections animate into view with IntersectionObserver
+- **Stat counters** - animated `500+`, `12`, `98%` on hero load
+- **Form UX** - focus states with glow ring + toast notification system
+- **Backend modal** - shown for locked P2–P4 features
+- **ESC key** - closes modal globally
+- **Footer** - link hover slide animation
+
+---
+
+## 🚀 Getting Started
+
+### Option 1 - VS Code Live Server *(recommended)*
+
+```
 1. Open the project folder in VS Code
-2. Right-click `index.html` → `Open with Live Server`
-3. Opens at `http://127.0.0.1:5500`
+2. Right-click index.html → Open with Live Server
+3. Opens at http://127.0.0.1:5500
+```
 
-**Option 2 - Direct browser**
-1. Double-click `index.html`
+### Option 2 - Direct browser
+
+```
+1. Double-click index.html
 2. Opens locally in your default browser
+```
 
-> No build step, no npm install, no dependencies - just open and run.
+> ✅ No build step. No `npm install`. No dependencies. Just open and run.
 
 ---
 
-## Design System
+## 🎨 Design System
 
 | Token | Value |
 |---|---|
 | Primary (Mocha) | `#A5856E` |
 | Mocha Dark | `#7A5C44` |
-| Accent (Blue) | `#A0D4E0` |
+| Accent (Cyan) | `#A0D4E0` |
 | Dark | `#2A1F17` |
 | Background | `#FDFCFA` |
 | Grey Surface | `#F2F0EA` |
-| Heading Font | Quantico 700, uppercase |
-| Body Font | DM Sans 400/500 |
+| Heading Font | `Quantico 700, uppercase` |
+| Body Font | `DM Sans 400 / 500` |
 | Border Radius | `14px` |
 
 ---
 
-## Internship Roadmap
+## 🗺️ Internship Roadmap
 
 ```
-P1 - Responsive Frontend   ✅ Active
-P2 - Backend APIs          🔒 Unlocks after P1
-P3 - React SPA             🔒 Unlocks after P2
-P4 - Full Stack Deploy     🔒 Unlocks after P3
+P1 — Responsive Frontend    ✅  Active
+P2 — Backend APIs           🔒  Unlocks after P1
+P3 — React SPA              🔒  Unlocks after P2
+P4 — Full Stack Deploy      🔒  Unlocks after P3
 ```
 
 ---
 
-## Submission Checklist
+## ✅ Submission Checklist
 
 - [ ] All 5 pages render correctly on mobile and desktop
 - [ ] No horizontal scroll on any viewport
 - [ ] Hamburger menu works on mobile
 - [ ] All buttons and nav links navigate correctly
 - [ ] Form inputs have visible focus states
-- [ ] Images (logo) load without broken icon
-- [ ] Lighthouse score — Performance ≥ 90, Accessibility ≥ 90
+- [ ] Logo loads without broken icon
+- [ ] Lighthouse - Performance ≥ 90
+- [ ] Lighthouse - Accessibility ≥ 90
 
 ---
 
-## Contact
+## 📬 Contact
 
-**DecodeLabs**
-decodelabs.tech@gmail.com
-www.decodelabs.tech
-Greater Lucknow, India
+**DecodeLabs**  
+📧 decodelabs.tech@gmail.com  
+🌐 [www.decodelabs.tech](https://www.decodelabs.tech)  
+📍 Greater Lucknow, India
 
 ---
 
